@@ -33,20 +33,36 @@
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
-    return n === undefined ? array[0] : array.slice(0, n);
+    // return n === undefined ? array[0] : array.slice(0, n);
+    // HRP: MODIFED
+    // If the index (n) is undefined, return the first element
+    if(n === undefined){
+      return array[0];
+    }
+    // If the 0 is passed as the index, return empty array
+    else if(n === 0){
+      return [];
+    }
+    // Should accept index argument (HELP?)
+    else{
+      return array.slice(0, n);
+    }
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
     // HRP: MODIFIED
+    // If the index (n) is undefined, return the the last element
     if(n === undefined){
-      return array.pop();
+      return array[array.length - 1];
     }
+    // If the 0 is passed as the index, return empty array
     else if(n === 0){
       return [];
     }
-    else {
+    // Should accept index argument (HELP?)
+    else{
       return array.slice(-n);
     }
   };
@@ -59,17 +75,19 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     // HRP: MODIFIED
+    // Check to input collection is an Array
     if(Array.isArray(collection)){
       for(var i = 0; i < collection.length; i++){
-        iterator(collection[i], i, collection);
+          iterator(collection[i], i, collection);
         }
       }
-      else {
-        for(var key in collection){
-          iterator(collection[key], key, collection);
-    		}
+    // Check to input collection is an Object
+    else{
+      for(var key in collection){
+        iterator(collection[key], key, collection);
     	}
-    };
+    }
+  };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
@@ -92,11 +110,12 @@
   _.filter = function(collection, test) {
     // HRP: MODIFIED
     var filteredArrray = [];
-    _.each(collection, function(element){
-      if(test(element)){
-        filteredArrray.push(element);
+    for(var i = 0; i < collection.length; i++){
+      // Pass each element in the collection through the Truth Test
+      if(test(collection[i]) === true){
+        filteredArrray.push(collection[i]);
       }
-    });
+    }
     return filteredArrray;
   };
 
@@ -104,15 +123,17 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+
     // HRP: MODIFIED
+    // Pass each element in the collection through the Truth Test
     return _.filter(collection, function(element){
+      // Return each element that does not pass the Truth Test
       return !test(element);
     });
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    // HRP: MODIFIED
 
   };
 
@@ -121,12 +142,15 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+
     // HRP: MODIFIED
-    var mapped = [];
+    // Should produce a new Array
+    var mappedArray = [];
+    // Applys the function over each item in the collection
     _.each(collection, function(item){
-      mapped.push(iterator(item));
+      mappedArray.push(iterator(item));
     });
-    return mapped;
+    return mappedArray;
   };
 
   /*
@@ -170,6 +194,7 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     // HRP: MODIFIED
+    // Calls the iterator even if the accumulator is undefined
     if(accumulator === undefined){
       accumulator = collection[0];
   	  collection = collection.slice(1, collection.length);
@@ -197,21 +222,22 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     // HRP: MODIFIED
+    //
     if(iterator === undefined){
       iterator = _.identity;
     }
-    var passed = [];
+    var passedArray = [];
     _.reduce(collection, function(hasPassedTest, item){
       if(iterator(item)){
-      	passed.push(true);
-      	return passed;
+      	passedArray.push(true);
+      	return passedArray;
       }
       else{
-        passed.push(false);
-      	return passed;
+        passedArray.push(false);
+      	return passedArray;
       }
-    }, passed);
-    if(_.indexOf(passed, false) === -1){
+    }, passedArray);
+    if(_.indexOf(passedArray, false) === -1){
     	return true;
     }
     else{
@@ -224,10 +250,12 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+
     // HRP: MODIFIED
     if(iterator === undefined){
     	iterator = _.identity;
     }
+    // Passes each item of the collection into the truth test
     return !_.every(collection, function(item){
     	return !iterator(item);
     });
@@ -254,8 +282,9 @@
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
     // HRP: MODIFIED
-    for(var i = 1; i < arguments.length; i++){
+    for(var i = 0; i < arguments.length; i++){
       for(var prop in arguments[i]){
+        // Assign arguments as object properties
         obj[prop] = arguments[i][prop];
       }
     }
