@@ -134,7 +134,35 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-
+    // HRP: MODIFED
+    var copiedArray = array.slice();
+    var uniqueArray = [];
+    for(var i = 0; i < copiedArray.length;i++){
+      // Check see if the value at index 0 is greater than index 1
+      if(copiedArray[i] > copiedArray[i + 1]){
+        isSorted = false;
+        // Break needs to be in here to stop
+        break;
+        }
+        else{
+          isSorted = true;
+        }
+      }
+    //
+    for(var j = 0; j < copiedArray.length; j++){
+      if(isSorted === true){
+        if(_.indexOf(uniqueArray, copiedArray[j]) === -1){
+          uniqueArray.push(copiedArray[j]);
+        }
+        else{
+          return uniqueArray;
+        }
+      }
+      else if(isSorted === false && _.indexOf(uniqueArray, copiedArray[j])){
+        uniqueArray.push(copiedArray[j]);
+      }
+    };
+    return uniqueArray;
   };
 
 
