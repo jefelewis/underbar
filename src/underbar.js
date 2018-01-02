@@ -137,6 +137,7 @@
 
   };
 
+
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     // map() is a useful primitive iteration function that works a lot
@@ -388,11 +389,19 @@
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
     // HRP: MODIFIED
-    var newArray = array.slice();
-       return newArray.sort(function(){
-         return Math.random();
-       });
-    };
+    // Creates a copy of the array
+    var copiedArray = array.slice();
+    var shuffledArray = [];
+    // Iterate through each item in the array
+    _.each(array, function(item){
+      // Creates a random whole integer to be used for the index
+      var randomIndex = Math.floor(Math.random() * copiedArray.length);
+      // Assigns random index item from copied array to Shuffled Array
+      shuffledArray.push(copiedArray[randomIndex]);
+      copiedArray.splice(randomIndex, 1);
+    });
+    return shuffledArray;
+  };
 
 
   /**
