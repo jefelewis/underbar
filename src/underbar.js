@@ -479,7 +479,7 @@
     // Use Array.isArray to check if something is an array
     if(Array.isArray(nestedArray)){
       for(var i = 0; i < nestedArray.length; i++){
-        flattenedArray.push(Number(nestedArray[i]));
+        flattenedArray.push(Number(parseInt(nestedArray[i])));
       }
       return flattenedArray;
     }
