@@ -39,11 +39,12 @@
     if(n === undefined){
       return array[0];
     }
-    // If the 0 is passed as the index, return empty array
+    // If the 0 is passed as the index (n), return empty array
     else if(n === 0){
       return [];
     }
-    // Should accept index argument (HELP?)
+    // Return the first or desired first (n) elements in the array. "n" refers
+    // to how many numbers should be returned. Example: Return the first 3 numbers, so n is 3
     else{
       return array.slice(0, n);
     }
@@ -57,11 +58,12 @@
     if(n === undefined){
       return array[array.length - 1];
     }
-    // If the 0 is passed as the index, return empty array
+    // If the 0 is passed as the index (n), return empty array
     else if(n === 0){
       return [];
     }
-    // Should accept index argument (HELP?)
+    // Return the last or desired last (n) elements in the array. "n" refers
+    // to how many numbers should be returned. Example: Return the last 3 numbers, so n is 3
     else{
       return array.slice(-n);
     }
@@ -78,12 +80,14 @@
     // Check to input collection is an Array
     if(Array.isArray(collection)){
       for(var i = 0; i < collection.length; i++){
-          iterator(collection[i], i, collection);
+        // Call iterator(value, key, collection) for each element of collection.
+        iterator(collection[i], i, collection);
         }
       }
     // Check to input collection is an Object
     else{
       for(var key in collection){
+        // Call iterator(value, key, collection) for each element of collection.
         iterator(collection[key], key, collection);
     	}
     }
@@ -95,6 +99,8 @@
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
+
+    // Returns the index at which value can be found in the array, or -1 if value
     var result = -1;
 
     _.each(array, function(item, index) {
@@ -102,7 +108,6 @@
         result = index;
       }
     });
-
     return result;
   };
 
@@ -137,7 +142,7 @@
     // HRP: MODIFED
     var copiedArray = array.slice();
     var uniqueArray = [];
-    for(var i = 0; i < copiedArray.length;i++){
+    for(var i = 0; i < copiedArray.length; i++){
       // Check see if the value at index 0 is greater than index 1
       if(copiedArray[i] > copiedArray[i + 1]){
         isSorted = false;
@@ -443,6 +448,9 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    // HRP: MODIFIED
+
+
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -450,6 +458,7 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -458,6 +467,7 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
@@ -465,16 +475,26 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var flattenedArray = [];
+    // Use Array.isArray to check if something is an array
+    if(Array.isArray(nestedArray)){
+      for(var i = 0; i < nestedArray.length; i++){
+        flattenedArray.push(Number(nestedArray[i]));
+      }
+      return flattenedArray;
+    }
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
@@ -483,5 +503,6 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+
   };
 }());
